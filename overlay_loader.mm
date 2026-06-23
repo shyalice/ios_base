@@ -109,7 +109,9 @@
 
 - ( void )applyOverlayGeometryInParent:( UIView* )parent
 {
-    CGRect host_bounds = rt::msg< CGRect >( m_pHostWindow, "bounds" );
+    id screen = rt::msg( rt::cls( "UIScreen" ), "mainScreen" );
+    CGRect screen_bounds = rt::msg< CGRect >( screen, "bounds" );
+    CGRect overlay_frame = rt::msg< CGRect >( m_pHostWindow, "convertRect:fromWindow:", screen_bounds, nil );
 
     rt::msg< void >( self, "disableClippingFromView:", static_cast< id >( parent ) );
     rt::msg< void >( static_cast< id >( m_pHostWindow ), "setClipsToBounds:", NO );
@@ -117,8 +119,9 @@
     rt::msg< void >( host_layer, "setMasksToBounds:", NO );
 
     rt::msg< void >( static_cast< id >( m_pOverlay ), "setTransform:", CGAffineTransformIdentity );
-    rt::msg< void >( static_cast< id >( m_pOverlay ), "setFrame:", host_bounds );
-    rt::msg< void >( static_cast< id >( m_pOverlay ), "setBounds:", host_bounds );
+    rt::msg< void >( static_cast< id >( m_pOverlay ), "setFrame:", overlay_frame );
+    CGRect overlay_bounds = CGRectMake( 0, 0, overlay_frame.size.width, overlay_frame.size.height );
+    rt::msg< void >( static_cast< id >( m_pOverlay ), "setBounds:", overlay_bounds );
     rt::msg< void >( static_cast< id >( m_pOverlay ), "setAutoresizingMask:", static_cast< NSUInteger >( 0 ) );
 }
 
@@ -153,8 +156,10 @@
     if ( !m_pSecure )
     {
         m_pSecure = rt::msg< SecureView* >( rt::cls( "SecureView" ), "build" );
-        CGRect host_b = rt::msg< CGRect >( m_pHostWindow, "bounds" );
-        rt::msg< void >( static_cast< id >( m_pSecure ), "setFrame:", host_b );
+        id screen = rt::msg( rt::cls( "UIScreen" ), "mainScreen" );
+        CGRect screen_bounds = rt::msg< CGRect >( screen, "bounds" );
+        CGRect overlay_frame = rt::msg< CGRect >( m_pHostWindow, "convertRect:fromWindow:", screen_bounds, nil );
+        rt::msg< void >( static_cast< id >( m_pSecure ), "setFrame:", overlay_frame );
         rt::msg< void >( static_cast< id >( m_pSecure ), "setAutoresizingMask:",
                          static_cast< NSUInteger >( UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight ) );
         rt::msg< void >( static_cast< id >( m_pHostWindow ), "addSubview:", static_cast< id >( m_pSecure ) );
