@@ -1,0 +1,9 @@
+Package: shy.alice.imgui
+Name: shyalice imgui base
+Depends: mobilesubstrate
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: imgui base
+Maintainer: shyalice
+Author: shyalice
+Section: Tweaks

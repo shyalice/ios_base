@@ -1,0 +1,10 @@
+.DS_Store
+.theos/
+packages/
+obj/
+*.deb
+*.o
+*.a
+*.dylib
+*.swp
+*~
