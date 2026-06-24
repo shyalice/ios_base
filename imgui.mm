@@ -45,7 +45,7 @@
     if ( m_fNativeScale <= 0.0f ) m_fNativeScale = 2.0f;
     
     m_fFbScale = 2.0f;
-    m_szDrawable = CGSizeMake( frame.size.width * m_fNativeScale, frame.size.height * m_fNativeScale );
+    m_szDrawable = CGSizeMake( std::round( frame.size.width * m_fNativeScale ), std::round( frame.size.height * m_fNativeScale ) );
     
     m_bImGuiReady = NO;
     m_bInteractive = NO;
@@ -104,7 +104,7 @@
 {
     [super layoutSubviews];
     CGRect bounds = rt::msg< CGRect >( self, "bounds" );
-    m_szDrawable = CGSizeMake( bounds.size.width * m_fNativeScale, bounds.size.height * m_fNativeScale );
+    m_szDrawable = CGSizeMake( std::round( bounds.size.width * m_fNativeScale ), std::round( bounds.size.height * m_fNativeScale ) );
     rt::msg< void >( self, "setContentScaleFactor:", static_cast< CGFloat >( m_fNativeScale ) );
     rt::msg< void >( m_pMetalLayer, "setContentsScale:", static_cast< CGFloat >( m_fNativeScale ) );
     rt::msg< void >( m_pMetalLayer, "setDrawableSize:", m_szDrawable );
