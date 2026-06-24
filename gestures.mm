@@ -48,6 +48,9 @@ namespace imgui
                           static_cast< id >( binding ), sel_registerName( "fire:" ) );
         rt::msg< void >( rec, "setNumberOfTapsRequired:", static_cast< NSUInteger >( taps ) );
         rt::msg< void >( rec, "setNumberOfTouchesRequired:", static_cast< NSUInteger >( fingers ) );
+        rt::msg< void >( rec, "setCancelsTouchesInView:", NO );
+        rt::msg< void >( rec, "setDelaysTouchesBegan:", NO );
+        rt::msg< void >( rec, "setDelaysTouchesEnded:", NO );
         binding.recognizer = static_cast< UITapGestureRecognizer* >( rec );
 
         rt::msg< void >( m_pHost, "addGestureRecognizer:", rec );

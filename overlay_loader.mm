@@ -130,7 +130,6 @@
     m_gestures.attach( m_pHostWindow );
     m_gestures.on( 3, 2, [ self ] { rt::msg< void >( self, "toggleMenu" ); } );
     m_gestures.on( 2, 2, [ self ] { rt::msg< void >( self, "toggleSecure" ); } );
-    m_gestures.on( 1, 3, [ self ] { rt::msg< void >( self, "toggleMenu" ); } );
 }
 
 - ( void )toggleMenu
